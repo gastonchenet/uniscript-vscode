@@ -26,16 +26,32 @@
       "patterns": [
         {
           "name": "keyword.control.uniscript",
-          "match": "\\b(if|else|while|for|put)\\b"
+          "match": "\\b(if|else|while|for|put|return)\\b"
         },
         {
           "name": "keyword.operator.range.uniscript",
           "match": "\\b(to|step)\\b"
+        },
+        {
+          "name": "constant.language.uniscript",
+          "match": "\\b(true|false)\\b"
+        },
+        {
+          "name": "keyword.other.uniscript",
+          "match": "\\b(fn)\\b"
+        },
+        {
+          "name": "keyword.control.loop.uniscript",
+          "match": "\\b(break|continue)\\b"
         }
       ]
     },
     "variable": {
       "patterns": [
+        {
+          "name": "meta.function.declaration.uniscript",
+          "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*(?=\\s*\\()"
+        },
         {
           "name": "variable.other.uniscript",
           "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b"

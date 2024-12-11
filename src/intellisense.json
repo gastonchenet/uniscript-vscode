@@ -24,6 +24,12 @@
       "name": "put",
       "description": "Print to the console",
       "snippet": "put ${1:value}"
+    },
+    {
+      "name": "fn",
+      "description": "Define a function",
+      "snippet": "fn ${1:name}(${2:args}) {\n\t$0\n}"
     }
-  ]
+  ],
+  "constants": ["true", "false"]
 }

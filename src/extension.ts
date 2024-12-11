@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import intellisense from "./intellisense.json";
 
 const DECLARED_VARIABLES_REGEX = /(\w+)\s*=\s*.*/g;
+const DECLARED_FUNCTIONS_REGEX = /(\w+)\s*\(.*\)/g;
 
 const documentFilter: vscode.DocumentFilter = {
   language: "uniscript",
@@ -18,6 +19,16 @@ function getDeclaredVariables(document: vscode.TextDocument) {
   return declaredVariables;
 }
 
+function getDeclaredFunctions(document: vscode.TextDocument) {
+  const text = document.getText();
+
+  const declaredFunctions = [...text.matchAll(DECLARED_FUNCTIONS_REGEX)].map(
+    (match) => match[1]
+  );
+
+  return declaredFunctions;
+}
+
 export function activate(context: vscode.ExtensionContext) {
   const uniscriptCompletionProvider =
     vscode.languages.registerCompletionItemProvider(documentFilter, {
@@ -26,10 +37,6 @@ export function activate(context: vscode.ExtensionContext) {
           const completionItem = new vscode.CompletionItem(
             item.name,
             vscode.CompletionItemKind.Keyword
-          );
-
-          completionItem.documentation = new vscode.MarkdownString(
-            item.description
           );
 
           completionItem.insertText = new vscode.SnippetString(item.snippet);
@@ -46,7 +53,25 @@ export function activate(context: vscode.ExtensionContext) {
           return completionItem;
         });
 
-        return [...keywords, ...variables];
+        const functions = getDeclaredFunctions(document).map((funcion) => {
+          const completionItem = new vscode.CompletionItem(
+            funcion,
+            vscode.CompletionItemKind.Function
+          );
+
+          return completionItem;
+        });
+
+        const constants = intellisense.constants.map((constant) => {
+          const completionItem = new vscode.CompletionItem(
+            constant,
+            vscode.CompletionItemKind.Constant
+          );
+
+          return completionItem;
+        });
+
+        return [...keywords, ...variables, ...functions, ...constants];
       },
     });
 
