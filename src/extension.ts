@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import intellisense from "./intellisense.json";
 
-const DECLARED_VARIABLES_REGEX = /(\w+)\s*=\s*.*;/g;
+const DECLARED_VARIABLES_REGEX = /(\w+)\s*=\s*.*/g;
 
 const documentFilter: vscode.DocumentFilter = {
   language: "uniscript",
@@ -62,7 +62,9 @@ export function activate(context: vscode.ExtensionContext) {
           (item) => item.name === word
         );
 
-        if (!keyword) return;
+        if (!keyword) {
+          return;
+        }
 
         return new vscode.Hover(new vscode.MarkdownString(keyword.description));
       },
