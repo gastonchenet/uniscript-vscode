@@ -1,0 +1,14 @@
+{
+  "iconDefinitions": {
+    "usFileIcon": {
+      "iconPath": "./src/icons/us-file-icon.svg"
+    }
+  },
+  "fileExtensions": {
+    "us": "usFileIcon"
+  },
+  "fileNames": {},
+  "languageIds": {
+    "uniscript": "usFileIcon"
+  }
+}

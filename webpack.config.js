@@ -51,6 +51,8 @@ const extensionConfig = {
         { from: "./syntaxes/", to: "./syntaxes/" },
         { from: "./language-configuration.json", to: "./" },
         { from: "./src/intellisense.json", to: "./src" },
+        { from: "./src/file-icons.json", to: "./src" },
+        { from: "./src/icons/us-file-icon.svg", to: "./src/icons/" },
       ],
     }),
   ],

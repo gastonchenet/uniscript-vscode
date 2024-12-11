@@ -9,7 +9,10 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onLanguage:uniscript",
+    "onCommand:workbench.action.selectIconTheme"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "languages": [
@@ -23,6 +26,13 @@
           "uscript"
         ],
         "configuration": "./language-configuration.json"
+      }
+    ],
+    "iconThemes": [
+      {
+        "id": "uniscript-icon-theme",
+        "label": "UniScript Icon Theme",
+        "path": "./src/file-icons.json"
       }
     ],
     "grammars": [
