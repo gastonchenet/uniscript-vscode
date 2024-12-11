@@ -1,0 +1,46 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "scopeName": "source.uniscript",
+  "name": "UniScript",
+  "patterns": [
+    {
+      "name": "keyword.control.uniscript",
+      "match": "\\b(?:if|else|while|for|put|to|step)\\b"
+    },
+    {
+      "name": "string.quoted.double.uniscript",
+      "begin": "\"",
+      "end": "\""
+    },
+    {
+      "name": "constant.numeric.uniscript",
+      "match": "\\b\\d+\\b"
+    },
+    {
+      "name": "comment.line.double-dash.uniscript",
+      "match": "--.*$"
+    },
+    {
+      "name": "variable.other.uniscript",
+      "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b"
+    },
+    {
+      "name": "keyword.operator.uniscript",
+      "match": "\\b(?:==?|\\+|-|\\*|\\/|^|&&|\\|\\||>=?|<=?)\\b"
+    },
+    {
+      "name": "punctuation.uniscript",
+      "match": "[\\[\\]{}(),;]"
+    }
+  ],
+  "repository": {
+    "comment": {
+      "patterns": [
+        {
+          "name": "comment.line.double-dash.uniscript",
+          "match": "--.*$"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "keywords": [
+    {
+      "name": "if",
+      "description": "Conditional statement",
+      "snippet": "if ${1:condition} {\n\t$0\n}"
+    },
+    {
+      "name": "else",
+      "description": "Else statement",
+      "snippet": "else {\n\t$0\n}"
+    },
+    {
+      "name": "while",
+      "description": "Iterate while condition is true",
+      "snippet": "while ${1:condition} {\n\t$0\n}"
+    },
+    {
+      "name": "for",
+      "description": "Iterate over a range",
+      "snippet": "for ${1:i} = ${2:0} to ${3:10} {\n\t$0\n}"
+    },
+    {
+      "name": "put",
+      "description": "Print to the console",
+      "snippet": "put ${1:value}"
+    }
+  ]
+}

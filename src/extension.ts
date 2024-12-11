@@ -1,26 +1,76 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
+import * as vscode from "vscode";
+import intellisense from "./intellisense.json";
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
+const DECLARED_VARIABLES_REGEX = /(\w+)\s*=\s*.*;/g;
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "uniscript" is now active!');
+const documentFilter: vscode.DocumentFilter = {
+  language: "uniscript",
+  scheme: "file",
+};
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('uniscript.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from UniScript!');
-	});
+function getDeclaredVariables(document: vscode.TextDocument) {
+  const text = document.getText();
 
-	context.subscriptions.push(disposable);
+  const declaredVariables = [...text.matchAll(DECLARED_VARIABLES_REGEX)].map(
+    (match) => match[1]
+  );
+
+  return declaredVariables;
 }
 
-// This method is called when your extension is deactivated
+export function activate(context: vscode.ExtensionContext) {
+  const uniscriptCompletionProvider =
+    vscode.languages.registerCompletionItemProvider(documentFilter, {
+      provideCompletionItems(document, position, token, context) {
+        const keywords = intellisense.keywords.map((item) => {
+          const completionItem = new vscode.CompletionItem(
+            item.name,
+            vscode.CompletionItemKind.Keyword
+          );
+
+          completionItem.documentation = new vscode.MarkdownString(
+            item.description
+          );
+
+          completionItem.insertText = new vscode.SnippetString(item.snippet);
+
+          return completionItem;
+        });
+
+        const variables = getDeclaredVariables(document).map((variable) => {
+          const completionItem = new vscode.CompletionItem(
+            variable,
+            vscode.CompletionItemKind.Variable
+          );
+
+          return completionItem;
+        });
+
+        return [...keywords, ...variables];
+      },
+    });
+
+  const uniscriptHoverProvider = vscode.languages.registerHoverProvider(
+    documentFilter,
+    {
+      provideHover(document, position, token) {
+        const word = document.getText(
+          document.getWordRangeAtPosition(position)
+        );
+
+        const keyword = intellisense.keywords.find(
+          (item) => item.name === word
+        );
+
+        if (!keyword) return;
+
+        return new vscode.Hover(new vscode.MarkdownString(keyword.description));
+      },
+    }
+  );
+
+  context.subscriptions.push(uniscriptCompletionProvider);
+  context.subscriptions.push(uniscriptHoverProvider);
+}
+
 export function deactivate() {}
