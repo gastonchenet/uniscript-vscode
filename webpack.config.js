@@ -50,6 +50,7 @@ const extensionConfig = {
       patterns: [
         { from: "./syntaxes/", to: "./syntaxes/" },
         { from: "./language-configuration.json", to: "./" },
+        { from: "./src/intellisense.json", to: "./src" },
       ],
     }),
   ],

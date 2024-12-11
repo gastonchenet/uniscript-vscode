@@ -33,6 +33,10 @@
       }
     ]
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:gastonchenet/uniscript.git"
+  },
   "scripts": {
     "vscode:prepublish": "npm run package",
     "compile": "webpack",
